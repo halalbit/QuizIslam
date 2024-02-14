@@ -5,23 +5,26 @@ from tkinter import simpledialog
 
 def generate_question_image(question, answers, correct_answer_index, question_number):
     # Créer une image de base pour la question
-    img = Image.new('RGB', (800, 600), color=(255, 255, 255))
+    img = Image.new('RGB', (1080, 1080), color=(153, 204, 204))
     d = ImageDraw.Draw(img)
-    font = ImageFont.load_default()
-
+    taille_de_la_police = 60
+    font = ImageFont.truetype("ressources/CormorantInfant-Regular.ttf", taille_de_la_police)
+    # Ajouter le numéro de la question dans le cercle 
+    d.ellipse([(10,10), (110,110)], fill=(255,255,255))
+    d.text((40, 40), str(question_number), fill=(0,0,0), font=font)
     # Ajouter la question
-    d.text((10,10), f"Question {question_number}: {question}", fill=(0,0,0), font=font)
+    d.text((87,219), f"{question}", fill=(0,0,0), font=font)
 
     # Ajouter les réponses
     for i, answer in enumerate(answers):
         d.text((10, 40 + i * 30), f"{chr(65+i)}) {answer}", fill=(0,0,0), font=font)
 
     # Sauvegarder l'image avec un nom unique pour chaque question
-    img.save(f'question_{question_number}.png')
+    img.save(f'images/Q{question_number}.png')
 
 def generate_answer_image(correct_answer, justification, question_number):
     # Créer une image de base pour la réponse
-    img = Image.new('RGB', (800, 600), color=(255, 255, 255))
+    img = Image.new('RGB', (1080, 1080), color=(153, 204, 204))
     d = ImageDraw.Draw(img)
     font = ImageFont.load_default()
 
@@ -31,7 +34,7 @@ def generate_answer_image(correct_answer, justification, question_number):
         d.text((10, 40), f"Justification: {justification}", fill=(0,0,0), font=font)
 
     # Sauvegarder l'image avec un nom unique pour chaque réponse
-    img.save(f'answer_{question_number}.png')
+    img.save(f'images/R{question_number}.png')
 
 def main():
     # Créer la fenêtre Tkinter
